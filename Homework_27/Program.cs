@@ -4,6 +4,12 @@ internal class Program
 {
     static void Main(string[] args)
     {
+        const string createDossier = "1";
+        const string outputAllDossiers = "2";
+        const string deletingDossier = "3";
+        const string searchDossier = "4";
+        const string doExit = "5";
+
         string[] fullName = { };
         string[] position = { };
         bool isDatabaseActive = true;
@@ -12,29 +18,29 @@ internal class Program
 
         while (isDatabaseActive)
         {
-            Console.WriteLine("1 - Добавить досье.");
-            Console.WriteLine("2 - Вывести все досье.");
-            Console.WriteLine("3 - Удалить досье.");
-            Console.WriteLine("4 - Поиск сотрудника по Фамилии.");
-            Console.WriteLine("5 - Завершить работу программы.");
+            Console.WriteLine($"{createDossier} - Добавить досье.");
+            Console.WriteLine($"{outputAllDossiers} - Вывести все досье.");
+            Console.WriteLine($"{deletingDossier} - Удалить досье.");
+            Console.WriteLine($"{searchDossier} - Поиск сотрудника по Фамилии.");
+            Console.WriteLine($"{doExit} - Завершить работу программы.");
 
             string userInput = Console.ReadLine();
 
             switch (userInput)
             {
-                case "1":
-                    InputAddingInfo(ref fullName, ref position);
+                case createDossier:
+                    CreateDossier(ref fullName, ref position);
                     break;
-                case "2":
-                    InfoOutput(fullName, position);
+                case outputAllDossiers:
+                    OutputAllDossiers(fullName, position);
                     break;
-                case "3":
-                    InputInfoDelete(ref fullName, ref position);
+                case deletingDossier:
+                    DeletingDossierByUser(ref fullName, ref position);
                     break;
-                case "4":
-                    InputSearchInfo(fullName, position);
+                case searchDossier:
+                    InputSearchDossier(fullName, position);
                     break;
-                case "5":
+                case doExit:
                     DoExit(ref isDatabaseActive);
                     break;
                 default:
@@ -44,7 +50,7 @@ internal class Program
         }
     }
 
-    static string[] InfoAdd(string[] info, string newInfo)
+    static string[] AddDossier(string[] info, string newInfo)
     {
         string[] tempArray = new string[info.Length + 1];
 
@@ -58,25 +64,25 @@ internal class Program
         return info;
     }
 
-    static void InputAddingInfo(ref string[] fullName, ref string[] position)
+    static void CreateDossier(ref string[] fullName, ref string[] position)
     {
         Console.Clear();
         Console.WriteLine("Введите Ф.И.О сотрудника: ");
 
         string newFullName = Console.ReadLine();
-        fullName = InfoAdd(fullName, newFullName);
+        fullName = AddDossier(fullName, newFullName);
 
         Console.WriteLine("Введите должность сотрудника: ");
 
         string newPosition = Console.ReadLine();
-        position = InfoAdd(position, newPosition);
+        position = AddDossier(position, newPosition);
 
         Console.WriteLine("Успешно! Досье добавлено. Нажмите любую кнопку, чтобы продолжить.");
         Console.ReadKey();
         Console.Clear();
     }
 
-    static void InfoOutput(string[] fullName, string[] position)
+    static void OutputAllDossiers(string[] fullName, string[] position)
     {
         Console.Clear();
 
@@ -92,7 +98,7 @@ internal class Program
         Console.Clear();
     }
 
-    static string[] InfoDelite(string[] info, int indexNumbers)
+    static string[] DeletingDossier(string[] info, int indexNumbers)
     {
         string[] tempArray = new string[info.Length - 1];
 
@@ -110,21 +116,21 @@ internal class Program
         return info;
     }
 
-    static void InputInfoDelete(ref string[] fullName, ref string[] position)
+    static void DeletingDossierByUser(ref string[] fullName, ref string[] position)
     {
         Console.Clear();
         Console.WriteLine("Укажите номер досье, которое хотите удалить.");
 
         int indexNumbers = Convert.ToInt16(Console.ReadLine()) - 1;
-        fullName = InfoDelite(fullName, indexNumbers);
-        position = InfoDelite(position, indexNumbers);
+        fullName = DeletingDossier(fullName, indexNumbers);
+        position = DeletingDossier(position, indexNumbers);
 
         Console.WriteLine("Успешно! Досье удаленно. Нажмите любую кнопку, чтобы продолжить.");
         Console.ReadKey();
         Console.Clear();
     }
 
-    static void SearchInfo(string[] fullName, string[] position, string searchInfo)
+    static void SearchDossier(string[] fullName, string[] position, string searchDossier)
     {
         int indexNumbers = 0;
         bool wasFound = false;
@@ -134,7 +140,7 @@ internal class Program
             string[] tempArray = fullName[i].Split(' ');
             indexNumbers++;
 
-            if (tempArray[i].ToLower() == searchInfo)
+            if (tempArray[i].ToLower() == searchDossier)
             {
                 string foundFullName = fullName[i];
                 string foundPosition = position[i];
@@ -148,17 +154,17 @@ internal class Program
 
         if (wasFound == false)
         {
-            Console.WriteLine($"{searchInfo}. Cотрудник отсутствует в базе данных.");
+            Console.WriteLine($"{searchDossier}. Cотрудник отсутствует в базе данных.");
         }
     }
 
-    static void InputSearchInfo(string[] fullName, string[] position)
+    static void InputSearchDossier(string[] fullName, string[] position)
     {
         Console.Clear();
         Console.WriteLine("Введите Фамилию сотрудника, досье которого хотите найти.");
 
-        string searchInfo = Console.ReadLine();
-        SearchInfo(fullName, position, searchInfo);
+        string searchDossier = Console.ReadLine();
+        SearchDossier(fullName, position, searchDossier);
 
         Console.WriteLine("Нажмите любую кнопку, чтобы продолжить.");
         Console.ReadKey();
