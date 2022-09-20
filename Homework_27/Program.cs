@@ -4,11 +4,11 @@ internal class Program
 {
     static void Main(string[] args)
     {
-        const string createDossier = "1";
-        const string outputAllDossiers = "2";
-        const string deletingDossier = "3";
-        const string searchDossier = "4";
-        const string doExit = "5";
+        const string СreateDossier = "1";
+        const string AllDossiers = "2";
+        const string DeletingDossier = "3";
+        const string SearchDossier = "4";
+        const string Exit = "5";
 
         string[] fullName = { };
         string[] position = { };
@@ -18,30 +18,33 @@ internal class Program
 
         while (isDatabaseActive)
         {
-            Console.WriteLine($"{createDossier} - Добавить досье.");
-            Console.WriteLine($"{outputAllDossiers} - Вывести все досье.");
-            Console.WriteLine($"{deletingDossier} - Удалить досье.");
-            Console.WriteLine($"{searchDossier} - Поиск сотрудника по Фамилии.");
-            Console.WriteLine($"{doExit} - Завершить работу программы.");
+            Console.WriteLine($"{СreateDossier} - Добавить досье.");
+            Console.WriteLine($"{AllDossiers} - Вывести все досье.");
+            Console.WriteLine($"{DeletingDossier} - Удалить досье.");
+            Console.WriteLine($"{SearchDossier} - Поиск сотрудника по Фамилии.");
+            Console.WriteLine($"{Exit} - Завершить работу программы.");
 
             string userInput = Console.ReadLine();
 
             switch (userInput)
             {
-                case createDossier:
+                case СreateDossier:
                     CreateDossier(ref fullName, ref position);
                     break;
-                case outputAllDossiers:
+                case AllDossiers:
                     OutputAllDossiers(fullName, position);
                     break;
-                case deletingDossier:
+                case DeletingDossier:
                     DeletingDossierByUser(ref fullName, ref position);
                     break;
-                case searchDossier:
-                    InputSearchDossier(fullName, position);
+                case SearchDossier:
+                    SearchDossierByUser(fullName, position);
                     break;
-                case doExit:
-                    DoExit(ref isDatabaseActive);
+                case Exit:
+                    Console.Clear();
+                    Console.WriteLine("Работа программы завершена.");
+
+                    isDatabaseActive = false;
                     break;
                 default:
                     Console.WriteLine("Ошибка! Неизвестная команда.");
@@ -50,18 +53,18 @@ internal class Program
         }
     }
 
-    static string[] AddDossier(string[] info, string newInfo)
+    static string[] AddDossier(string[] dossierInfo, string newDossierInfo)
     {
-        string[] tempArray = new string[info.Length + 1];
+        string[] tempArray = new string[dossierInfo.Length + 1];
 
-        for (int i = 0; i < info.Length; i++)
+        for (int i = 0; i < dossierInfo.Length; i++)
         {
-            tempArray[i] = info[i];
+            tempArray[i] = dossierInfo[i];
         }
 
-        info = tempArray;
-        info[info.Length - 1] = newInfo;
-        return info;
+        dossierInfo = tempArray;
+        dossierInfo[dossierInfo.Length - 1] = newDossierInfo;
+        return dossierInfo;
     }
 
     static void CreateDossier(ref string[] fullName, ref string[] position)
@@ -98,22 +101,22 @@ internal class Program
         Console.Clear();
     }
 
-    static string[] DeletingDossier(string[] info, int indexNumbers)
+    static string[] DeletingDossier(string[] dossierInfo, int indexNumbers)
     {
-        string[] tempArray = new string[info.Length - 1];
+        string[] tempArray = new string[dossierInfo.Length - 1];
 
         for (int i = 0; i < indexNumbers; i++)
         {
-            tempArray[i] = info[i];
+            tempArray[i] = dossierInfo[i];
         }
 
         for (int i = indexNumbers; i < tempArray.Length; i++)
         {
-            tempArray[i] = info[i + 1];
+            tempArray[i] = dossierInfo[i + 1];
         }
 
-        info = tempArray;
-        return info;
+        dossierInfo = tempArray;
+        return dossierInfo;
     }
 
     static void DeletingDossierByUser(ref string[] fullName, ref string[] position)
@@ -140,7 +143,7 @@ internal class Program
             string[] tempArray = fullName[i].Split(' ');
             indexNumbers++;
 
-            if (tempArray[i].ToLower() == searchDossier)
+            if (tempArray[i] == searchDossier)
             {
                 string foundFullName = fullName[i];
                 string foundPosition = position[i];
@@ -158,7 +161,7 @@ internal class Program
         }
     }
 
-    static void InputSearchDossier(string[] fullName, string[] position)
+    static void SearchDossierByUser(string[] fullName, string[] position)
     {
         Console.Clear();
         Console.WriteLine("Введите Фамилию сотрудника, досье которого хотите найти.");
@@ -169,14 +172,5 @@ internal class Program
         Console.WriteLine("Нажмите любую кнопку, чтобы продолжить.");
         Console.ReadKey();
         Console.Clear();
-    }
-
-    static void DoExit(ref bool isDatabaseActive)
-    {
-        Console.Clear();
-        Console.WriteLine("Работа программы завершена.");
-        Console.ReadKey();
-
-        isDatabaseActive = false;
     }
 }
