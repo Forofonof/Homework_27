@@ -10,8 +10,8 @@ internal class Program
         const string SearchDossier = "4";
         const string Exit = "5";
 
-        string[] fullName = { };
-        string[] position = { };
+        string[] fullNames = { };
+        string[] positions = { };
         bool isDatabaseActive = true;
 
         Console.WriteLine("База данных к вашим услугам, что желаете сделать?\n");
@@ -29,16 +29,16 @@ internal class Program
             switch (userInput)
             {
                 case СreateDossier:
-                    CreateDossier(ref fullName, ref position);
+                    CreateDossier(ref fullNames, ref positions);
                     break;
                 case AllDossiers:
-                    OutputAllDossiers(fullName, position);
+                    OutputAllDossiers(fullNames, positions);
                     break;
                 case DeletingDossier:
-                    DeletingDossierByUser(ref fullName, ref position);
+                    DeletеDossierByUser(ref fullNames, ref positions);
                     break;
                 case SearchDossier:
-                    SearchDossierByUser(fullName, position);
+                    SearchDossierByUser(fullNames, positions);
                     break;
                 case Exit:
                     Console.Clear();
@@ -72,36 +72,36 @@ internal class Program
         Console.Clear();
         Console.WriteLine("Введите Ф.И.О сотрудника: ");
 
-        string newFullName = Console.ReadLine();
-        fullName = AddDossier(fullName, newFullName);
+        string newFullNames = Console.ReadLine();
+        fullName = AddDossier(fullName, newFullNames);
 
         Console.WriteLine("Введите должность сотрудника: ");
 
-        string newPosition = Console.ReadLine();
-        position = AddDossier(position, newPosition);
+        string newPositions = Console.ReadLine();
+        position = AddDossier(position, newPositions);
 
         Console.WriteLine("Успешно! Досье добавлено. Нажмите любую кнопку, чтобы продолжить.");
         Console.ReadKey();
         Console.Clear();
     }
 
-    static void OutputAllDossiers(string[] fullName, string[] position)
+    static void OutputAllDossiers(string[] fullNames, string[] positions)
     {
         Console.Clear();
 
         int personNumbers = 0;
 
-        for (int i = 0; i < fullName.Length; i++)
+        for (int i = 0; i < fullNames.Length; i++)
         {
             personNumbers++;
-            Console.WriteLine($"№: {personNumbers}. Ф.И.О: {fullName[i]}. Должность: {position[i]}.");
+            Console.WriteLine($"№: {personNumbers}. Ф.И.О: {fullNames[i]}. Должность: {positions[i]}.");
         }
 
         Console.ReadKey();
         Console.Clear();
     }
 
-    static string[] DeletingDossier(string[] dossierInfo, int indexNumbers)
+    static string[] DeletеDossier(string[] dossierInfo, int indexNumbers)
     {
         string[] tempArray = new string[dossierInfo.Length - 1];
 
@@ -119,34 +119,34 @@ internal class Program
         return dossierInfo;
     }
 
-    static void DeletingDossierByUser(ref string[] fullName, ref string[] position)
+    static void DeletеDossierByUser(ref string[] fullName, ref string[] position)
     {
         Console.Clear();
         Console.WriteLine("Укажите номер досье, которое хотите удалить.");
 
         int indexNumbers = Convert.ToInt16(Console.ReadLine()) - 1;
-        fullName = DeletingDossier(fullName, indexNumbers);
-        position = DeletingDossier(position, indexNumbers);
+        fullName = DeletеDossier(fullName, indexNumbers);
+        position = DeletеDossier(position, indexNumbers);
 
         Console.WriteLine("Успешно! Досье удаленно. Нажмите любую кнопку, чтобы продолжить.");
         Console.ReadKey();
         Console.Clear();
     }
 
-    static void SearchDossier(string[] fullName, string[] position, string searchDossier)
+    static void SearchDossier(string[] fullNames, string[] positions, string searchDossier)
     {
         int indexNumbers = 0;
         bool wasFound = false;
 
-        for (int i = 0; i < fullName.Length; i++)
+        for (int i = 0; i < fullNames.Length; i++)
         {
-            string[] tempArray = fullName[i].Split(' ');
+            string[] tempArray = fullNames[i].Split(' ');
             indexNumbers++;
 
             if (tempArray[i] == searchDossier)
             {
-                string foundFullName = fullName[i];
-                string foundPosition = position[i];
+                string foundFullName = fullNames[i];
+                string foundPosition = positions[i];
 
                 Console.WriteLine("Доступна следующая информация:");
                 Console.WriteLine($"Сотрудник: {foundFullName}. Находится в базе данных под номером: {indexNumbers}. Занимает должность: {foundPosition}.");
