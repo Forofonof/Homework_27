@@ -29,7 +29,7 @@ internal class Program
             switch (userInput)
             {
                 case СreateDossier:
-                    CreateDossier(ref fullNames, ref positions);
+                    AddDossier(ref fullNames, ref positions);
                     break;
                 case AllDossiers:
                     OutputAllDossiers(fullNames, positions);
@@ -53,7 +53,7 @@ internal class Program
         }
     }
 
-    static string[] AddDossier(string[] dossierInfo, string newDossierInfo)
+    static string[] CreateDossier(string[] dossierInfo, string newDossierInfo)
     {
         string[] tempArray = new string[dossierInfo.Length + 1];
 
@@ -67,18 +67,18 @@ internal class Program
         return dossierInfo;
     }
 
-    static void CreateDossier(ref string[] fullName, ref string[] position)
+    static void AddDossier(ref string[] fullName, ref string[] position)
     {
         Console.Clear();
         Console.WriteLine("Введите Ф.И.О сотрудника: ");
 
         string newFullNames = Console.ReadLine();
-        fullName = AddDossier(fullName, newFullNames);
+        fullName = CreateDossier(fullName, newFullNames);
 
         Console.WriteLine("Введите должность сотрудника: ");
 
         string newPositions = Console.ReadLine();
-        position = AddDossier(position, newPositions);
+        position = CreateDossier(position, newPositions);
 
         Console.WriteLine("Успешно! Досье добавлено. Нажмите любую кнопку, чтобы продолжить.");
         Console.ReadKey();
